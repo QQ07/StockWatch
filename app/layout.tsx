@@ -13,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [user, setuser] = useState();
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     axios
       .post("http://localhost:8000/api/user", {
