@@ -1,5 +1,3 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
 module.exports = {
   typescript: {
     // !! WARN !!
@@ -9,4 +7,3 @@ module.exports = {
     ignoreBuildErrors: true,
   },
 };
-export default nextConfig;
