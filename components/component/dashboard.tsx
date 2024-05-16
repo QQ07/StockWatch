@@ -54,7 +54,7 @@ export function Dashboard() {
   const [watchlists, setWatchlists] = useState<Watchlist[]>([]);
 
   async function hydrateWatchlists() {
-    const response = await axios.post("http://localhost:8000/api/dummy", {
+    const response = await axios.post("http://localhost:8000/api/watchlists", {
       token: localStorage.getItem("token"),
     });
     console.log(response.data.watchlists);

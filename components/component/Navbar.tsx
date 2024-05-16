@@ -1,19 +1,25 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-const Navbar = (props) => {
+const Navbar = ({user}) => {
+  const [s,ss]=useState("")
+  function reRender(){
+    ss("a");
+  }
   const router = useRouter();
   const logout = () => {
     localStorage.clear("token");
-    router.push("/");
+    window.location="/";
+    reRender();
   };
 
   let menu;
 
-  if (!props.user) {
+  if (!user) {
     menu = (
+
       <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
         <li>
           <div
@@ -39,8 +45,17 @@ const Navbar = (props) => {
     menu = (
       <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
         <li>
+          
           <div
             class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
+            aria-current="page"
+          >
+           Hello, {user.name}
+          </div>
+        </li>
+        <li>
+          <div
+            class="block cursor-pointer py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-800"
             aria-current="page"
             onClick={logout}
           >

@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar user={user} isloading={loading}></Navbar>
+        <Navbar user={user} ></Navbar>
         {children}
       </body>
     </html>

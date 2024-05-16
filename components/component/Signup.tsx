@@ -1,9 +1,24 @@
 "use client";
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export function Signup() {
+  const router = useRouter();
+useEffect(()=>{
+  axios
+    .post("http://localhost:8000/api/user", {
+      token: localStorage.getItem("token"),
+    })
+    .then(function (response) {
+      console.log(response.data);
+     window.location="/"
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+});
   const [email, setEmail]: [string, Dispatch<SetStateAction<string>>] =
     useState("");
   const [password, setPassword] = useState("");
@@ -46,6 +61,8 @@ export function Signup() {
                 password,
               }
             );
+            console.log(response.data.token);
+            localStorage.setItem("token",response.data.token);
           }}
           className="m-3 bg-blue-500 rounded p-1 hover:bg-blue-400 w-fit"
         >
