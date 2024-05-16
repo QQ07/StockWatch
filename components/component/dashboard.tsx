@@ -29,6 +29,22 @@ interface Watchlist {
   tickers: Ticker[];
 }
 export function Dashboard() {
+  const [user, setuser] = useState();
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    axios
+      .post("http://localhost:8000/api/user", {
+        token: localStorage.getItem("token"),
+      })
+      .then(function (response) {
+        console.log(response.data);
+        setuser(response.data.user);
+        setLoading(false);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
   const [newWatchlist, setNewWatchlist] = useState("");
   const [newTicker, setNewTicker] = useState("");
   const [open, setOpen] = useState(false);
@@ -54,11 +70,16 @@ export function Dashboard() {
   const [watchlists, setWatchlists] = useState<Watchlist[]>([]);
 
   async function hydrateWatchlists() {
-    const response = await axios.post("http://localhost:8000/api/watchlists", {
-      token: localStorage.getItem("token"),
-    });
-    console.log(response.data.watchlists);
-    setWatchlists(response.data.watchlists);
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/watchlists",
+        {
+          token: localStorage.getItem("token"),
+        }
+      );
+      console.log(response.data.watchlists);
+      setWatchlists(response.data.watchlists);
+    } catch (error) {}
   }
   useEffect(() => {
     hydrateWatchlists();
@@ -105,9 +126,14 @@ export function Dashboard() {
     <>
       {/* {JSON.stringify(watchlists)} */}
       <div className="container mx-auto">
-        <div className="text-3xl font-bold  inline-flex mr-10">Watchlists</div>
-        <Button onClick={handleOpen}>Create Watchlist</Button>
-
+        {user&&(
+        <>
+          <div className="text-3xl font-bold  inline-flex mr-10">
+            Watchlists
+          </div>
+          <Button onClick={handleOpen}>Create Watchlist</Button>
+        </>
+        )}
         <div className="flex flex-wrap gap-4">
           {watchlists.map((watchlist) => (
             <div key={watchlist.id} className="bg-black rounded shadow p-4">
