@@ -13,7 +13,8 @@ useEffect(()=>{
     })
     .then(function (response) {
       console.log(response.data);
-     window.location="/"
+      console.log("going home")
+     window.location.href="/"
     })
     .catch(function (error) {
       console.log(error);
@@ -49,7 +50,7 @@ useEffect(()=>{
           }}
           label="Password"
           type={"password"}
-          placeholder="123456"
+          placeholder="password"
         />
         <button
           onClick={async () => {
@@ -62,6 +63,7 @@ useEffect(()=>{
               }
             );
             console.log(response.data.token);
+            window.location.href="/"
             localStorage.setItem("token",response.data.token);
           }}
           className="m-3 bg-blue-500 rounded p-1 hover:bg-blue-400 w-fit"
